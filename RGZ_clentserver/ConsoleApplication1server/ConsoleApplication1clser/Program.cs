@@ -65,7 +65,6 @@ namespace ConsoleApplication1clser
                     case 0:
                         while (true)
                         {
-
                             int id = random.Next(0, 1001);
                             if (clients.Find(c => c.ID == id) == null)
                             {
@@ -82,7 +81,7 @@ namespace ConsoleApplication1clser
                         foreach (var c in clients)
                         {
                             if (c != client)
-                                c.Socket.Send(ms.GetBuffer());
+                            c.Socket.Send(ms.GetBuffer());
                         }
                     break;
                 }

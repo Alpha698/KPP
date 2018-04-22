@@ -28,13 +28,55 @@ namespace ConsoleApplication1client
                 Color = color;
                 ID = id;
             } //параметры игрока
+            /// <summary>
+            /// //////////////////////////////////////////////////
+            /// </summary>
+            //class Field
+            //{
+            //    int width; //ширина поля
+            //    int height; //высота поля
+            //    static bool[,] tetrisField; //игровое поле
+
+            //    public Field(int w, int h)
+            //    {
+            //        this.width = w;
+            //        this.height = h;
+            //        tetrisField = new bool[height, width];
+            //        //level = 0;
+            //        //scores = 0;
+            //    }
+
+            //    public void DrawField()
+            //    {
+
+            //        for (int i = 0; i < height - 1; i++)
+            //        {
+            //            for (int j = 1; j < width - 1; j++)
+            //            {
+            //                Console.CursorLeft = j;
+            //                Console.CursorTop = i;
+            //                if (tetrisField[i, j] == false) Console.WriteLine(" ");
+            //                else Console.WriteLine("0");
+            //            }
+            //            Console.WriteLine();
+            //        }
+
+            //        //Console.WriteLine("\n   Level " + this.level);
+            //       // Console.WriteLine("\n  Scores " + this.scores);
+            //    }
+            //}
+
+            /// <summary>
+            /// /////////////////////////////////////////////////
+            /// </summary>
+
 
             public void Draw()
             {
                 Console.ForegroundColor = Color;
                 Console.SetCursorPosition(X, Y);
                 Console.Write(Sprite);
-            }//отрисовка
+            }//отрисовка игрока
 
             public void Remove()
             {
@@ -105,15 +147,28 @@ namespace ConsoleApplication1client
                 player.Draw();
                 switch(Console.ReadKey(true).Key)
                 {
-                    case ConsoleKey.LeftArrow: player.Remove(); player.X--; goto case 252;
+                    case ConsoleKey.LeftArrow: player.Remove(); player.X--; goto case 252; 
                     case ConsoleKey.RightArrow: player.Remove();  player.X++; goto case 252;
                     case ConsoleKey.UpArrow: player.Remove(); player.Y--; goto case 252;
                     case ConsoleKey.DownArrow: player.Remove(); player.Y++; goto case 252;
 
                     case (ConsoleKey)252:
+                        if (player.X < 0)
+                        {  player.X++;  }
+
+                        if (player.Y < 0)
+                        {  player.Y++;    }
+
+                        if (player.Y >= 25)
+                        { player.Y--; }
+
+                        if (player.X >= 80)
+                        { player.X--; }
+
                         player.Draw();
                         SendPacket(PacketInfo.Position);
-                    break;
+                        break;
+
                 }
             }
         }
