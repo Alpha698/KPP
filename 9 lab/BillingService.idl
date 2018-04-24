@@ -1,0 +1,8 @@
+module BillingServiceModule{
+interface BillingService{
+void addNewCard(in string personName,in string card);
+void addMoney(in string card,in double money);
+void subMoney(in string card, in double money);
+double getCardBalance(in string card);
+};
+};

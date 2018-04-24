@@ -56,7 +56,21 @@ namespace ConsoleApplication1clser
             while(true)
             {
                 ms.Position = 0;
-                client.Socket.Receive(ms.GetBuffer());
+                //if (ms.GetBuffer().Length <= 0)
+                //{
+                //    Console.WriteLine("Client[" + client.ID + "] has disconnected");
+                //    return;
+                //}
+                try
+                {
+                    client.Socket.Receive(ms.GetBuffer());
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine("ERROR : " + e.Message);
+                    socket.Shutdown(SocketShutdown.Both);
+                    socket.Close();
+                };
                 //|0
                 int code = reader.ReadInt32();
                 //0|
