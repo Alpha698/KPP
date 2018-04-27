@@ -115,7 +115,8 @@ namespace ConsoleApplication1client
             Console.Clear();
 
             Console.WriteLine("Введите спрайт");
-            char spr = Convert.ToChar(Console.ReadLine());
+            string tchar = Console.ReadLine();
+            char spr = Convert.ToChar(tchar[0]);
             Console.Clear();
 
             Console.WriteLine("Выберите цвет");
