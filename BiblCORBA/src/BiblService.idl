@@ -1,0 +1,11 @@
+module    BiblServiceModule {
+    interface BiblService {
+  //определение CORBA-совместимого сервиса
+  void addNewBook(in string newISBN, in string newBookName);
+  void addNewReader(in string bilet, in string Name);
+  void takeBook (in string Name, in string Book);
+  void returnBook (in string rName, in string rBook);
+  string getReaderInfo(in string reader); 
+  string getFullInfo(); 
+  };
+};
