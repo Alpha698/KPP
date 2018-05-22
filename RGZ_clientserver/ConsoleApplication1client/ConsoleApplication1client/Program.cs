@@ -12,6 +12,7 @@ namespace ConsoleApplication1client
 {
     class Program
     {
+        
         class Player
         {
             public int X { get; set; }
@@ -22,8 +23,8 @@ namespace ConsoleApplication1client
 
             public Player(int x, int y, char sprite, ConsoleColor color, int id)
             {
-                X = x;
-                Y = y;
+                X = 1;
+                Y = 0;
                 Sprite = sprite;
                 Color = color;
                 ID = id;
@@ -142,23 +143,67 @@ namespace ConsoleApplication1client
             player = new Player(x,y,spr,clr,id);
             SendPacket(PacketInfo.Position);
 
+            ////////////////////////////
+            Console.ForegroundColor = (ConsoleColor)7;
+            int[,] nums2 =  { {1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
+                    {1,0,1,0,0,0,0,1,0,0,0,1,1,1,1,0,0,0,0,1,},
+                    {1,0,1,0,1,1,0,1,0,1,0,0,0,0,1,0,1,1,0,1,},
+                    {1,0,0,0,0,0,0,1,0,1,1,1,1,0,1,0,0,1,0,1,},
+                    {1,1,1,1,1,1,0,1,0,1,1,1,1,0,1,1,0,1,0,1,},
+                    {1,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,1,},
+                    {1,0,1,1,0,1,1,1,0,0,0,0,1,0,1,1,1,1,0,1,},
+                    {1,0,0,0,0,0,0,0,0,1,1,1,1,0,1,0,1,1,1,1,},
+                    {1,1,1,1,1,1,0,1,1,1,0,0,0,0,1,0,1,1,1,1,},
+                    {1,1,0,0,0,1,0,1,1,1,0,1,1,1,1,0,0,0,0,1,},
+                    {1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,1,1,1,0,1,},
+                    {1,1,1,1,1,1,0,1,1,1,1,1,1,0,1,0,0,0,0,1,},
+                    {1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,1,1,1,},
+                    {1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,0,0,0,0,1,},
+                    {1,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,1,1,0,1,},
+                    {1,0,1,1,1,1,1,0,1,0,1,1,1,0,1,0,0,0,0,1,},
+                    {1,0,1,0,0,0,1,0,1,0,0,0,1,0,1,1,1,1,1,1,},
+                    {1,0,1,0,1,0,1,0,1,1,1,0,0,0,0,0,0,0,0,1,},
+                    {1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,0,1,},
+                    {1,0,1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,},
+                    {1,0,1,0,1,0,0,0,0,0,1,1,1,1,1,1,0,1,1,1,},
+                    {1,0,1,0,1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,1,},
+                    {1,0,1,0,0,0,0,0,1,1,1,0,0,0,1,1,1,1,0,1,},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,} };
+
+
+            for (int i = 0; i < nums2.GetLength(0); i++)
+            {
+                for (int j = 0; j < nums2.GetLength(1); j++)
+                {
+                    if (nums2[i, j] == 0) Console.Write(" ");
+
+                    if (nums2[i, j] == 1) { Console.Write("▒");  }
+
+                }
+                Console.WriteLine();
+            }
+
+
+            ////////////////////////////////
+
             Task.Run(() => { while (true) ReceivePacket(); });
             while (true)
             {
                 player.Draw();
-                switch(Console.ReadKey(true).Key)
+                switch (Console.ReadKey(true).Key)
                 {
-                    case ConsoleKey.LeftArrow: player.Remove(); player.X--; goto case 252; 
-                    case ConsoleKey.RightArrow: player.Remove();  player.X++; goto case 252;
+
+                    case ConsoleKey.LeftArrow: player.Remove(); player.X--; goto case 252;
+                    case ConsoleKey.RightArrow: player.Remove(); player.X++; goto case 252;
                     case ConsoleKey.UpArrow: player.Remove(); player.Y--; goto case 252;
                     case ConsoleKey.DownArrow: player.Remove(); player.Y++; goto case 252;
-
+                    
                     case (ConsoleKey)252:
                         if (player.X < 0)
-                        {  player.X++;  }
+                        { player.X++; }
 
                         if (player.Y < 0)
-                        {  player.Y++;    }
+                        { player.Y++; }
 
                         if (player.Y >= 25)
                         { player.Y--; }
@@ -166,11 +211,26 @@ namespace ConsoleApplication1client
                         if (player.X >= 80)
                         { player.X--; }
 
+                        if (nums2[1,1] ==1) { }
+
+                        //for (int i = 0; i < nums2.GetLength(0); i++)
+                        //{
+                        //    for (int j = 0; j < nums2.GetLength(1); j++)
+                        //    {
+                        //        if (nums2[i, j] == 1)
+                        //        {
+                        //            if(player == nums2[i, j]) { }
+                        //        }
+                        //    }
+                        //}
+
+
                         player.Draw();
                         SendPacket(PacketInfo.Position);
                         break;
 
                 }
+
             }
         }
 
