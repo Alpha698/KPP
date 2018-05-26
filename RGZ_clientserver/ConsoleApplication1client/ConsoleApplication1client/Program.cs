@@ -85,7 +85,7 @@ namespace ConsoleApplication1client
                 Console.SetCursorPosition(X, Y);
                 Console.Write(" ");
 
-            }//стирание
+            }//стирание игрока
 
         }
 
@@ -239,48 +239,66 @@ namespace ConsoleApplication1client
             Console.WriteLine("███████░█░█░█░░█░█░█░███░███░███░█░█░░██░░██░█░█░░██░░░██░██░█░█░█░█░░█████████");
             Console.WriteLine("███████░░░█░██░█░███░█░░░███░░░█░░░█░█░█░███░░░█░█░█░█░██░██░█░░░█░██░█░█░█░███");
             Console.WriteLine("███████████████████████████████████████████████████████████████████████████████");
-            Thread.Sleep(3000);
-            Console.Clear();
-
-
-            Console.WriteLine("Подключение к серверу...");
-            socket.Connect("127.0.0.1", 2048);
-            Console.WriteLine("Подключено");
-            Thread.Sleep(2000);
-            Console.Clear();
-
-            Console.WriteLine("Введите спрайт:");
-            string tchar = Console.ReadLine();
-            char spr = Convert.ToChar(tchar[0]);
-            Console.Clear();
-
-            Console.WriteLine("Выберите цвет:");
-            for(int i =0; i<= 14; i++)
-            {
-                Console.ForegroundColor = (ConsoleColor)i;
-                Console.WriteLine(i);
-            }
-            Console.ResetColor();
-            ConsoleColor clr = (ConsoleColor)int.Parse(Console.ReadLine());
-            Console.Clear();
-
-            int x = random.Next(1, 5);
-            int y = random.Next(1, 5);
-
-            Console.WriteLine("Получение идентификатора");
-            SendPacket(PacketInfo.ID);
-            int id = ReceivePacket();
-            Console.WriteLine("Получен ID:" + id);
             Thread.Sleep(1000);
             Console.Clear();
 
-            player = new Player(x,y,spr,clr,id);
-            SendPacket(PacketInfo.Position);
+            //////////////////////////////////////////////////////////////////Меню
+            Console.WriteLine("[   █    ████ ███  █ ███   █ █   █ █████       ]");
+            Console.WriteLine("[   █    █  █ █  █ █ █  █  █ ██  █   █    █    ]");
+            Console.WriteLine("[   █    ████ ███  █ ███   █ █ █ █   █   ███   ]");
+            Console.WriteLine("[   █  █ █  █ █  █ █ █  █  █ █  ██   █    █    ]");
+            Console.WriteLine("[   ████ █  █ ████ █ █   █ █ █   █   █         ]");
+            Console.WriteLine("  ");
+            Console.WriteLine("  ");
+            Console.WriteLine("[            Press Y to continue               ]");
+            Console.WriteLine("[               Or N to exit                   ]");
+            ConsoleKeyInfo key = Console.ReadKey(true);
 
-            ////////////////////////////
-            Console.ForegroundColor = (ConsoleColor)7;
-            bool sost=false;
-            int[,] nums2 =  { {1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
+            if (key.Key == ConsoleKey.N) {   Environment.Exit(0);   }
+
+            Console.ReadLine();
+            Console.Clear();
+
+            if (key.Key == ConsoleKey.Y)
+            {
+                Console.WriteLine("Подключение к серверу...");
+                socket.Connect("127.0.0.1", 2048);
+                Console.WriteLine("Подключено");
+                Thread.Sleep(2000);
+                Console.Clear();
+
+                Console.WriteLine("Введите спрайт:");
+                string tchar = Console.ReadLine();
+                char spr = Convert.ToChar(tchar[0]);
+                Console.Clear();
+
+                Console.WriteLine("Выберите цвет:");
+                for (int i = 0; i <= 14; i++)
+                {
+                    Console.ForegroundColor = (ConsoleColor)i;
+                    Console.WriteLine(i);
+                }
+                Console.ResetColor();
+                ConsoleColor clr = (ConsoleColor)int.Parse(Console.ReadLine());
+                Console.Clear();
+
+                int x = random.Next(1, 5);
+                int y = random.Next(1, 5);
+
+                Console.WriteLine("Получение идентификатора");
+                SendPacket(PacketInfo.ID);
+                int id = ReceivePacket();
+                Console.WriteLine("Получен ID:" + id);
+                Thread.Sleep(1000);
+                Console.Clear();
+
+                player = new Player(x, y, spr, clr, id);
+                SendPacket(PacketInfo.Position);
+
+                ////////////////////////////
+                Console.ForegroundColor = (ConsoleColor)7;
+                bool sost = false;
+                int[,] nums2 =  { {1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
                     {1,0,1,0,0,0,0,1,0,0,0,1,1,1,1,0,0,0,0,1,},
                     {1,0,1,0,1,1,0,1,0,1,0,0,0,0,1,0,1,1,0,1,},
                     {1,0,0,0,0,0,0,1,0,1,1,1,1,0,1,0,0,1,0,1,},
@@ -306,86 +324,85 @@ namespace ConsoleApplication1client
                     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,} };
 
 
-            for (int i = 0; i < nums2.GetLength(0); i++)
-            {
-                for (int j = 0; j < nums2.GetLength(1); j++)
+                for (int i = 0; i < nums2.GetLength(0); i++)
                 {
-                    
-                if (nums2[i, j] == 0) { Console.Write(" "); }
-                if (nums2[i, j] == 1) { Console.Write("█"); }
-                if (nums2[i, j] == 3) { Console.Write("░"); }
+                    for (int j = 0; j < nums2.GetLength(1); j++)
+                    {
 
+                        if (nums2[i, j] == 0) { Console.Write(" "); }
+                        if (nums2[i, j] == 1) { Console.Write("█"); }
+                        if (nums2[i, j] == 3) { Console.Write("░"); }
+
+                    }
+                    Console.WriteLine();
                 }
-                Console.WriteLine();
-            }
 
-            ////////////////////////////////
-            //for (int i = 0; i < nums2.GetLength(0); i++)
-            //{for (int j = 0; j < nums2.GetLength(1); j++){
-            //        if (nums2[i, j] == 0) { sost = false; }
-            //        if (nums2[i, j] == 1) { sost = true;
-            //        //if (sost == true)
-            //        //{ player.X = 1; player.Y = 0; }
-            //    }
-            // }}
+                //¯\_(ツ)_/¯
+                //∩( ・ω・)∩
 
-            //сделать булевскую переменную если 1 то тру а если тру то стоять на месте
-            //двигаемся если 
-            //¯\_(ツ)_/¯
-            //∩( ・ω・)∩
-
-            Task.Run(() => { while (true) ReceivePacket(); });
-            while (true)
-            {
-                player.Draw();
+                Task.Run(() => { while (true) ReceivePacket(); });
+                while (true)
+                {
+                    player.Draw();
 
                     switch (Console.ReadKey(true).Key)
                     {
-                        case ConsoleKey.LeftArrow: if (nums2[player.Y, player.X-1] == 1) { break; } 
-                       // Console.WriteLine(player.X + "x" + player.Y + "y");
-                        player.Remove(); player.X--;
-                        break;
+                        case ConsoleKey.LeftArrow:
+                            if (nums2[player.Y, player.X - 1] == 1) { break; }
+                            // Console.WriteLine(player.X + "x" + player.Y + "y");
+                            player.Remove(); player.X--;
+                            break;
 
-                        case ConsoleKey.RightArrow: if (nums2[player.Y, player.X+1] == 1) { break; }
-                        //Console.WriteLine(player.X + "x" + player.Y + "y");
-                        player.Remove(); player.X++;
-                        break;
+                        case ConsoleKey.RightArrow:
+                            if (nums2[player.Y, player.X + 1] == 1) { break; }
+                            //Console.WriteLine(player.X + "x" + player.Y + "y");
+                            player.Remove(); player.X++;
+                            break;
 
-                        case ConsoleKey.UpArrow: if (nums2[player.Y-1, player.X] == 1) { break; }
-                       // Console.WriteLine(player.X + "x" + player.Y + "y");
-                        player.Remove(); player.Y--;
-                        break;
+                        case ConsoleKey.UpArrow:
+                            if (nums2[player.Y - 1, player.X] == 1) { break; }
+                            // Console.WriteLine(player.X + "x" + player.Y + "y");
+                            player.Remove(); player.Y--;
+                            break;
 
-                        case ConsoleKey.DownArrow: if (nums2[player.Y+1 , player.X] == 1) { break; }
-                        //Console.WriteLine(player.X + "x" + player.Y + "y");
-                        player.Remove(); player.Y++;
-                        break;
+                        case ConsoleKey.DownArrow:
+                            if (nums2[player.Y + 1, player.X] == 1) { break; }
+                            //Console.WriteLine(player.X + "x" + player.Y + "y");
+                            player.Remove(); player.Y++;
+                            break;
 
 
                     }//switch
 
-                if (nums2[player.Y, player.X] == 3) {
-                    Console.Clear();
-                    Console.WriteLine("Победил");
+                    if (nums2[player.Y, player.X] == 3)
+                    {
+                        Console.Clear();
 
-                    socket.Close();
-                    Thread.Sleep(3000);
-                    break;
-                }
+                        // Console.WriteLine("∩( ・ω・)∩ Win: ");Console.WriteLine(id + " !");
+                        Console.WriteLine("[      Win: " + id + " !      ]");
+                        //socket.Close();
+                        Thread.Sleep(3000);
 
-                if (player.X < 0)
-                { player.X++; }
-                if (player.Y < 0)
-                { player.Y++; }
-                if (player.Y >= 25)
-                { player.Y--; }
-                if (player.X >= 80)
-                { player.X--; }
- player.Draw(); SendPacket(PacketInfo.Position);
-            }//while
-            Console.ReadKey(true);
-          
+                        //Console.WriteLine("[               Press N to exit                   ]");
+                        //if (key.Key == ConsoleKey.N) { Environment.Exit(0); }
+                        break;
+                    }
 
+                    if (player.X < 0)
+                    { player.X++; }
+                    if (player.Y < 0)
+                    { player.Y++; }
+                    if (player.Y >= 25)
+                    { player.Y--; }
+                    if (player.X >= 80)
+                    { player.X--; }
+                    player.Draw(); SendPacket(PacketInfo.Position);
+                }//while
+                Console.ReadKey(true);
+
+            }
+            else
+                Console.WriteLine("The wrong key is pressed");
         }//main
 
         static void SendPacket(PacketInfo info)
