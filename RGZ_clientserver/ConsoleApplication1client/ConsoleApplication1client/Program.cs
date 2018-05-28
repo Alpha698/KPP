@@ -295,7 +295,7 @@ namespace ConsoleApplication1client
                 player = new Player(x, y, spr, clr, id);
                 SendPacket(PacketInfo.Position);
 
-                ////////////////////////////
+                ////////////////////////лабиринт
                 Console.ForegroundColor = (ConsoleColor)7;
                 bool sost = false;
                 int[,] nums2 =  { {1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
